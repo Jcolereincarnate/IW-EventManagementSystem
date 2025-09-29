@@ -4,6 +4,10 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+asgiref = "==3.9.1"
+django = "==5.2.6"
+python-decouple = "==3.8"
+sqlparse = "==0.5.3"
 
 [dev-packages]
 

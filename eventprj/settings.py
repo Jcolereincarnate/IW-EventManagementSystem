@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+from decouple import config
 from pathlib import Path
 from email.utils import formataddr
 
@@ -24,8 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@a8^&n@!5av-^if(mg9m4(1*4z17+tmrr7el0^0=4*g8%p+f2a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "192.168.0.120", '*']
+DEBUG = config("DEBUG", default=True, cast=bool)
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "192.168.0.120"]
 
 
 # Application definition
@@ -130,10 +130,10 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "topepaul38@gmail.com"
-EMAIL_HOST_PASSWORD = "dozh wrav ehlo rtow"  
-DEFAULT_FROM_EMAIL =formataddr(("InstictWave Group","topepaul38@gmail.com"))
+EMAIL_BACKEND = config("EMAIL_BACKEND")
+EMAIL_HOST = config("EMAIL_HOST")
+EMAIL_PORT = config("EMAIL_PORT")
+EMAIL_USE_TLS = config("EMAIL_USE_TLS")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")  
+DEFAULT_FROM_EMAIL =config("DEFAULT_FROM_EMAIL")
