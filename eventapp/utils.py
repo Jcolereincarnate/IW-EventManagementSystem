@@ -25,7 +25,7 @@ def generate_code(data, filename, logo_path=None):
     qr.add_data(data)
     qr.make(fit=True)
     qr_img = qr.make_image(fill_color="black", back_color="white").convert("RGBA")
-    # Simple check to see if logo exists
+
     if logo_path and os.path.exists(logo_path):
         logo = Image.open(logo_path).convert("RGBA")
         #resizing the logo to fit the center of QR code
