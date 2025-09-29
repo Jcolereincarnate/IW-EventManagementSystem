@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration Confirmation</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #f5f6fa; line-height: 1.6;">
+    <div style="max-width: 620px; margin: 20px auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+
+        <div style="background-color: #2563eb; padding: 40px 30px; text-align: center; position: relative;">
+
+            <img src="{{logo_url}}" alt="InstinctWave Logo" style="max-width: 180px; height: auto; margin-bottom: 20px; filter: brightness(0) invert(1);">
+            <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 300; letter-spacing: 1px;">
+                InstinctWave Group
+            </h1>
+            <div style="width: 60px; height: 2px; background-color: #ffffff; margin: 15px auto; opacity: 0.7;"></div>
+            <p style="color: #ffffff; margin: 0; font-size: 16px; opacity: 0.9; font-weight: 300;">
+                Event Registration Confirmation
+            </p>
+        </div>
+
+        <!-- Main Content -->
+        <div style="padding: 45px 35px;">
+            
+            <!-- Greeting -->
+            <div style="margin-bottom: 35px;">
+                <p style="color: #2d3748; font-size: 18px; margin: 0 0 25px 0; font-weight: 300;">
+                    Dear <strong style="color: #2563eb;">{{name}}</strong>,
+                </p>
+                <p style="color: #4a5568; font-size: 16px; margin: 0; line-height: 1.7; font-weight: 300;">
+                    Thank you for registering for <strong style="color: #2563eb;">{{events.title}}</strong> organized by InstinctWave Group.
+                    We are delighted to have you join us and assure you that this event will be a truly memorable experience.
+                </p>
+            </div>
+
+            <!-- Confirmation Notice -->
+            <div style="background-color: #f7fafc; padding: 25px; border-radius: 8px; border-left: 5px solid #2563eb; margin-bottom: 35px;">
+                <div style="display: flex; align-items: center;">
+                    <div style="width: 20px; height: 20px; background-color: #2563eb; border-radius: 50%; margin-right: 15px; position: relative;">
+                        <div style="position: absolute; top: 6px; left: 6px; width: 8px; height: 4px; border-left: 2px solid white; border-bottom: 2px solid white; transform: rotate(-45deg);"></div>
+                    </div>
+                    <p style="color: #2d3748; font-size: 16px; margin: 0; font-weight: 400;">
+                        Registration Successfully Confirmed
+                    </p>
+                </div>
+            </div>
+
+            <!-- Registration Details -->
+            <div style="margin-bottom: 35px;">
+                <h3 style="color: #2d3748; font-size: 20px; margin: 0 0 25px 0; font-weight: 400; position: relative; padding-bottom: 12px;">
+                    Your Registration Details
+                    <div style="position: absolute; bottom: 0; left: 0; width: 40px; height: 2px; background-color: #2563eb;"></div>
+                </h3>
+                
+                <div style="background-color: #f7fafc; padding: 25px; border-radius: 8px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="padding: 12px 0; color: #4a5568; font-weight: 500; width: 35%; vertical-align: top;">Name:</td>
+                            <td style="padding: 12px 0; color: #2d3748; font-weight: 400;">{{name}}</td>
+                        </tr>
+                        <tr style="border-top: 1px solid #e2e8f0;">
+                            <td style="padding: 12px 0; color: #4a5568; font-weight: 500; vertical-align: top;">Email Address:</td>
+                            <td style="padding: 12px 0; color: #2d3748; font-weight: 400;">{{email}}</td>
+                        </tr>
+                        <tr style="border-top: 1px solid #e2e8f0;">
+                            <td style="padding: 12px 0; color: #4a5568; font-weight: 500; vertical-align: top;">Phone Number:</td>
+                            <td style="padding: 12px 0; color: #2d3748; font-weight: 400;">{{phone}}</td>
+                        </tr>
+                        <tr style="border-top: 1px solid #e2e8f0;">
+                            <td style="padding: 12px 0; color: #4a5568; font-weight: 500; vertical-align: top;">Organization:</td>
+                            <td style="padding: 12px 0; color: #2d3748; font-weight: 400;">{{organization}}</td>
+                        </tr>
+                        <tr style="border-top: 1px solid #e2e8f0;">
+                            <td style="padding: 12px 0; color: #4a5568; font-weight: 500; vertical-align: top;">Position:</td>
+                            <td style="padding: 12px 0; color: #2d3748; font-weight: 400;">{{title}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Event Details -->
+            <div style="margin-bottom: 35px;">
+                <h3 style="color: #2d3748; font-size: 20px; margin: 0 0 25px 0; font-weight: 400; position: relative; padding-bottom: 12px;">
+                    Event Information
+                    <div style="position: absolute; bottom: 0; left: 0; width: 40px; height: 2px; background-color: #2563eb;"></div>
+                </h3>
+                
+                <div style="background-color: #2563eb; padding: 30px; border-radius: 8px; color: #ffffff;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="padding: 12px 0; color: rgba(255,255,255,0.8); font-weight: 500; width: 35%; vertical-align: top;">Event:</td>
+                            <td style="padding: 12px 0; color: #ffffff; font-weight: 400; font-size: 16px;">{{events.title}}</td>
+                        </tr>
+                        <tr style="border-top: 1px solid rgba(255,255,255,0.2);">
+                            <td style="padding: 12px 0; color: rgba(255,255,255,0.8); font-weight: 500; vertical-align: top;">Location:</td>
+                            <td style="padding: 12px 0; color: #ffffff; font-weight: 400;">{{events.location}}</td>
+                        </tr>
+                        <tr style="border-top: 1px solid rgba(255,255,255,0.2);">
+                            <td style="padding: 12px 0; color: rgba(255,255,255,0.8); font-weight: 500; vertical-align: top;">Date & Time:</td>
+                            <td style="padding: 12px 0; color: #ffffff; font-weight: 400;">{{events.date}}, {{events.time}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Next Steps -->
+            <div style="border: 2px solid #e2e8f0; padding: 25px; border-radius: 8px; margin-bottom: 35px; position: relative;">
+                <div style="position: absolute; top: -12px; left: 20px; background-color: #ffffff; padding: 0 10px;">
+                    <h4 style="color: #2563eb; margin: 0; font-size: 16px; font-weight: 500;">Next Steps</h4>
+                </div>
+                <p style="color: #4a5568; margin: 15px 0 0 0; font-size: 15px; line-height: 1.7; font-weight: 300;">
+                    Further details regarding pricing and payment instructions will be shared with you shortly via this email channel.
+                    Once your payment has been confirmed, you will be provided with a secure link to generate and access your event ticket.
+                </p>
+            </div>
+
+            <!-- Closing Message -->
+            <div style="text-align: center; margin-bottom: 35px; padding: 20px; background-color: #f7fafc; border-radius: 8px;">
+                <p style="color: #2d3748; font-size: 16px; margin: 0; line-height: 1.7; font-weight: 300; font-style: italic;">
+                    We sincerely appreciate your interest and look forward to welcoming you at the event.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Footer Section -->
+        <div style="background-color: #f8fafc; padding: 35px; border-top: 1px solid #e2e8f0;">
+            <div style="text-align: center;">
+                <p style="margin: 0 0 20px 0; font-size: 16px; color: #4a5568; font-weight: 300;">
+                    Warm regards,
+                </p>
+                
+                <div style="border-top: 1px solid #e2e8f0; padding-top: 20px;">
+                    <p style="margin: 0 0 8px 0; font-size: 18px; font-weight: 500; color: #2d3748;">
+                        Akin Naphtal
+                    </p>
+                    <p style="margin: 0 0 8px 0; font-size: 14px; color: #4a5568; font-weight: 300;">
+                        Chief Executive Officer
+                    </p>
+                    <p style="margin: 0; font-size: 18px; font-weight: 500; color: #2563eb;">
+                        InstinctWave
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div style="height: 4px; background-color: #2563eb;"></div>
+        
+    </div>
+
+
+    <div style="height: 20px;"></div>
+</body>
+</html>

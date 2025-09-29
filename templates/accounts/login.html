@@ -1,0 +1,61 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+
+{% block title %}Admin Login - Event Manager{% endblock %}
+{% block page_title %}Admin Login{% endblock %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/admin_login.css' %}">
+</head>
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <i class="fas fa-lock"></i>
+            <h2>Admin Login</h2>
+            <p>Access your event management dashboard</p>
+        </div>
+        
+        <form method="POST" class="auth-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">
+                    <i class="fas fa-user"></i>
+                    Username
+                </label>
+                <input type = "text"id= "username" name = "username"> </input>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">
+                    <i class="fas fa-lock"></i>
+                    Password
+                </label>
+                <input type = "password"id= "password" name ="password"> </input>
+            </div>
+            
+            {% if form.errors %}
+                <div class="error-messages">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <div class="error-message">
+                                <i class="fas fa-exclamation-circle"></i>
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-sign-in-alt"></i>
+                Login
+            </button>
+        </form>
+        
+        <div class="auth-footer">
+            <p>Need an account? <a href="{% url 'signup' %}">Sign up here</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

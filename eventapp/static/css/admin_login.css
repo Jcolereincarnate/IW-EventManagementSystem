@@ -1,0 +1,360 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: 100vh;
+}
+
+
+/* Auth Container */
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+}
+
+.auth-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+}
+
+
+/* Auth Card */
+
+.auth-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(40, 70, 145, 0.3);
+    padding: 40px;
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+    z-index: 1;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+
+/* Auth Header */
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-header i {
+    font-size: 48px;
+    color: #284691;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #284691 0%, #277EC1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.auth-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #284691;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.auth-header p {
+    color: #6c757d;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+
+/* Form Styles */
+
+.auth-form {
+    margin-bottom: 24px;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    color: #495057;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.form-group label i {
+    color: #277EC1;
+    font-size: 16px;
+    width: 18px;
+    text-align: center;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #495057;
+    background: #f8f9fa;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: inherit;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #284691;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(40, 70, 145, 0.1);
+    transform: translateY(-1px);
+}
+
+.form-group input:hover {
+    border-color: #277EC1;
+    background: white;
+}
+
+
+/* Error Messages */
+
+.error-messages {
+    margin-bottom: 20px;
+}
+
+.error-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border-left: 4px solid #dc3545;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.error-message i {
+    color: #dc3545;
+    font-size: 16px;
+}
+
+
+/* Button Styles */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px 24px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    font-family: inherit;
+    letter-spacing: 0.3px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #284691 0%, #277EC1 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(40, 70, 145, 0.3);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #1e3a7a 0%, #2068a3 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(40, 70, 145, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(40, 70, 145, 0.3);
+}
+
+.btn i {
+    font-size: 18px;
+}
+
+
+/* Auth Footer */
+
+.auth-footer {
+    text-align: center;
+    padding-top: 24px;
+    border-top: 1px solid #e9ecef;
+}
+
+.auth-footer p {
+    color: #6c757d;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.auth-footer a {
+    color: #284691;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.auth-footer a:hover {
+    color: #277EC1;
+    text-decoration: underline;
+}
+
+
+/* Loading State */
+
+.btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn:disabled:hover {
+    transform: none;
+    box-shadow: 0 4px 15px rgba(40, 70, 145, 0.3);
+}
+
+
+/* Focus States for Accessibility */
+
+.btn:focus,
+.form-group input:focus,
+.auth-footer a:focus {
+    outline: 2px solid #284691;
+    outline-offset: 2px;
+}
+
+
+/* Animations */
+
+.auth-card {
+    animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+    .auth-container {
+        padding: 15px;
+    }
+    .auth-card {
+        padding: 30px 25px;
+        border-radius: 12px;
+    }
+    .auth-header h2 {
+        font-size: 24px;
+    }
+    .auth-header p {
+        font-size: 15px;
+    }
+    .form-group input {
+        padding: 12px 14px;
+        font-size: 16px;
+        /* Prevent zoom on iOS */
+    }
+    .btn {
+        padding: 14px 20px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 25px 20px;
+        margin: 10px;
+    }
+    .auth-header i {
+        font-size: 40px;
+    }
+    .auth-header h2 {
+        font-size: 22px;
+    }
+}
+
+
+/* High Contrast Mode Support */
+
+@media (prefers-contrast: high) {
+    .auth-card {
+        border: 2px solid #000;
+    }
+    .form-group input {
+        border-width: 2px;
+    }
+    .btn-primary {
+        background: #000;
+        border: 2px solid #000;
+    }
+}
+
+
+/* Reduced Motion Support */
+
+@media (prefers-reduced-motion: reduce) {
+    .auth-card,
+    .btn,
+    .form-group input {
+        animation: none;
+        transition: none;
+    }
+}
+
+
+/* Print Styles */
+
+@media print {
+    .auth-container {
+        background: white;
+        min-height: auto;
+    }
+    .auth-card {
+        box-shadow: none;
+        border: 1px solid #000;
+    }
+    .btn {
+        display: none;
+    }
+}

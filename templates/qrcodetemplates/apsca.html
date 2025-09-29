@@ -1,0 +1,29 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>APSCA QR Code</title>
+    <link rel="stylesheet" href="{% static 'css/qrcode.css' %}">
+</head>
+<body>
+    <div class="qr-container">
+        {% if qr_code %}
+            <h2>Your Event QR Code</h2>
+            <img src="/media/{{ qr_code }}" alt="Your QR Code" class="qr-image">
+            <div class="btn-group">
+                <a href="{{ MEDIA_URL }}{{ qr_code }}" download="event_qrcode.png" class="btn download-btn">
+                    Download QR Code
+                </a>
+                <a href="{% url 'event-signup' %}" class="btn back-btn">
+                    Back to Signup
+                </a>
+            </div>
+        {% else %}
+            <p>No QR code found. Please sign up first.</p>
+            <a href="{% url 'event_signup' %}" class="btn back-btn">Go to Signup</a>
+        {% endif %}
+    </div>
+</body>
+</html>

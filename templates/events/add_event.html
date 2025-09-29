@@ -1,0 +1,91 @@
+{% extends "accounts/base.html" %}
+{% load static%}
+{% block title %}Add  Event - Event Manager{% endblock %}
+{% block page_title %}Add Event{% endblock %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/add_event.css' %}">
+</head>
+<div class="form-container">
+    <div class="form-header">
+        <h1>Add a new Event</h1>
+        <p class="form-description">Fill in the Event information below to add an Event.</p>
+    </div>
+    
+    <div class="form-card">
+        <form method="post" class="attendee-form">
+            {% csrf_token %}
+            
+            <div class="form-section">
+                <h3>
+                    <i class="fas fa-user"></i>
+                    Event Information
+                </h3>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">
+                            <i class="fas fa-user"></i>
+                            Event Name *
+                        </label>
+                        <input type="text" id="event_name" name="event_name" placeholder="Enter Event Name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">
+                            <i class="fas fa-envelope"></i>
+                            Event Description *
+                        </label>
+                        <textarea rows = "5" cols ="40" id="desc" name="desc" placeholder="Enter Event Description" required> </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">
+                            <i class="fas fa-phone"></i>
+                             Event Date *
+                        </label>
+                        <input type="date" id="event_date" name="event_date" placeholder="Enter Start date of Event" required min ={{ today }}>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">
+                            <i class="fas fa-phone"></i>
+                             Event Time *
+                        </label>
+                        <input type="time" id="event_time" name="event_time" placeholder="Enter Time of Event" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="organization">
+                            <i class="fas fa-building"></i>
+                            Event Location *
+                        </label>
+                        <input type="text" id="event_location" name="event_location" placeholder="Enter Event Location" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i>
+                    Add Event
+                </button>
+            </div>
+        </form>
+    </div>
+    
+        
+        <div class="tips-card">
+            <h3>Tips</h3>
+            <ul>
+                <li>Make sure to double-check Event Name and other details for accuracy</li>
+                <li>Required fields are marked with an asterisk (*)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

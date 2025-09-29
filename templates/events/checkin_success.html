@@ -1,0 +1,62 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Check In</title>
+    <link rel="stylesheet" href="{% static 'css/qrcode.css' %}">
+    <link rel="stylesheet" href="{% static 'css/check_success.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logo.png' %}">
+</head>
+<body>
+
+    <nav class="main-navbar">
+        <div class="navbar-container">
+            <!-- Logo Section -->
+            <div class="navbar-logo">
+                    <img src="{% static 'images/logo.png' %}" alt="Company Logo" class="logo-img">
+                </a>
+            </div>
+            
+            <!-- Navigation Links -->
+            <div class="navbar-nav">
+                <div class="nav-links">
+                    <a href="{% url 'event-signup' %}" class="nav-link">
+                        <i class="fas fa-user-plus"></i>
+                        
+                    </a>
+                    <a href="{% url 'event_qrcode' %}" class="nav-link active">
+                        <i class="fas fa-qrcode"></i>
+                    </a>
+                </div>
+                
+                <!-- Admin Section -->
+                <div class="nav-admin">
+                    <a href="{% url 'signup' %}" class="nav-link admin-link">
+                        <i class="fas fa-user-shield"></i>
+                      
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-toggle" aria-label="Toggle navigation">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
+    </nav>
+    <div class="checkin-success">
+        <h1>Check-in Successful</h1>
+        <p><strong>{{ attendee.name }}</strong> has been marked as attended for <em>{{ attendee.event.title }}</em>.</p>
+      </div>
+
+
+</body>
+</html>

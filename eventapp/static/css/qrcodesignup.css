@@ -1,0 +1,493 @@
+/* QR Code Signup Form Styles - qr-signup.css (Fixed for Navbar) */
+
+
+/* CSS Variables for Colors */
+
+:root {
+    --primary-dark: #284691;
+    --primary-light: #1BA95E;
+    --secondary-blue: #277EC1;
+    --secondary-green: #6AB436;
+    --secondary-cyan: #31AFE4;
+    --secondary-lime: #AACA4E;
+    --white: #ffffff;
+    --light-gray: #f8f9fa;
+    --medium-gray: #e9ecef;
+    --dark-gray: #6c757d;
+    --text-dark: #212529;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --shadow-hover: rgba(0, 0, 0, 0.15);
+    --border-radius: 8px;
+    --transition: all 0.3s ease;
+}
+
+
+/* Reset and Base Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+
+/* Updated body styles to work with navbar */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-dark);
+    line-height: 1.6;
+    min-height: 100vh;
+    /* Removed flex properties that were interfering with navbar */
+}
+
+
+/* Main Content Wrapper */
+
+.main-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 80px);
+    /* Adjust based on your navbar height */
+    padding: 2rem 1rem;
+}
+
+
+/* Form Container */
+
+.form-container {
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    overflow: hidden;
+    margin: 2rem auto;
+    /* Center horizontally and add vertical margin */
+}
+
+.form-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-dark), var(--secondary-blue), var(--secondary-cyan), var(--primary-light));
+}
+
+
+/* Header Styling */
+
+h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    border-radius: 2px;
+}
+
+
+/* Form Styling */
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+
+/* Label Styling */
+
+label {
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+}
+
+label::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--primary-dark);
+    display: inline-block;
+}
+
+
+/* Input Styling */
+
+input[type="text"],
+input[type="email"] {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    background: var(--white);
+    transition: var(--transition);
+    font-family: inherit;
+    margin-bottom: 0.5rem;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus {
+    outline: none;
+    border-color: var(--primary-dark);
+    box-shadow: 0 0 0 4px rgba(40, 70, 145, 0.1);
+    transform: translateY(-2px);
+}
+
+input[type="text"]:hover,
+input[type="email"]:hover {
+    border-color: var(--secondary-blue);
+}
+
+
+/* Select Dropdown */
+
+select {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    background: var(--white);
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: inherit;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 1rem center;
+    background-repeat: no-repeat;
+    background-size: 1rem;
+    padding-right: 3rem;
+    appearance: none;
+    margin-bottom: 0.5rem;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--primary-dark);
+    box-shadow: 0 0 0 4px rgba(40, 70, 145, 0.1);
+    transform: translateY(-2px);
+}
+
+select:hover {
+    border-color: var(--secondary-blue);
+}
+
+select option {
+    padding: 0.75rem;
+    color: var(--text-dark);
+    background: var(--white);
+}
+
+
+/* Submit Button */
+
+button[type="submit"] {
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-blue));
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 1.25rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+button[type="submit"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+button[type="submit"]:hover {
+    background: linear-gradient(135deg, var(--secondary-blue), var(--secondary-cyan));
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(40, 70, 145, 0.3);
+}
+
+button[type="submit"]:hover::before {
+    left: 100%;
+}
+
+button[type="submit"]:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(40, 70, 145, 0.2);
+}
+
+
+/* Form Field Groups */
+
+.form-field {
+    margin-bottom: 1.5rem;
+}
+
+
+/* Input Focus Animation */
+
+@keyframes inputFocus {
+    0% {
+        box-shadow: 0 0 0 0 rgba(40, 70, 145, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 8px rgba(40, 70, 145, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(40, 70, 145, 0);
+    }
+}
+
+input:focus,
+select:focus {
+    animation: inputFocus 0.5s ease-out;
+}
+
+
+/* Success State */
+
+.success-message {
+    background: linear-gradient(135deg, var(--secondary-green), var(--primary-light));
+    color: var(--white);
+    padding: 1rem 1.25rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 500;
+}
+
+.success-message::before {
+    content: '✓';
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+
+/* Error State */
+
+.error-message {
+    background: linear-gradient(135deg, #dc3545, #e74c3c);
+    color: var(--white);
+    padding: 1rem 1.25rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 500;
+}
+
+.error-message::before {
+    content: '!';
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+
+/* Required Field Indicator */
+
+.required::after {
+    content: ' *';
+    color: #dc3545;
+    font-weight: 600;
+}
+
+
+/* Loading State */
+
+.loading {
+    background: var(--medium-gray) !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.loading::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--white);
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 0.5rem;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* QR Code Specific Enhancements */
+
+.qr-form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.qr-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--secondary-cyan), var(--secondary-lime));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    color: var(--white);
+    font-size: 1.5rem;
+}
+
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+    .main-content {
+        min-height: calc(100vh - 60px);
+        /* Adjust for smaller navbar on mobile */
+        padding: 1rem;
+    }
+    .form-container {
+        padding: 2rem 1.5rem;
+        border-radius: 12px;
+        max-width: 100%;
+        margin: 1rem auto;
+    }
+    h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+    form {
+        gap: 1.25rem;
+    }
+    input[type="text"],
+    input[type="email"],
+    select {
+        padding: 0.875rem 1rem;
+        font-size: 0.9rem;
+    }
+    button[type="submit"] {
+        padding: 1rem 1.5rem;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-container {
+        padding: 1.5rem 1rem;
+        margin: 0.5rem;
+    }
+    h2 {
+        font-size: 1.6rem;
+    }
+    input[type="text"],
+    input[type="email"],
+    select {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+    button[type="submit"] {
+        padding: 0.875rem 1.25rem;
+    }
+}
+
+
+/* High Contrast Mode Support */
+
+@media (prefers-contrast: high) {
+    input[type="text"],
+    input[type="email"],
+    select {
+        border-width: 3px;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus {
+        border-width: 3px;
+        box-shadow: 0 0 0 6px rgba(40, 70, 145, 0.2);
+    }
+}
+
+
+/* Reduced Motion Support */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus {
+        transform: none;
+    }
+    button[type="submit"]:hover {
+        transform: none;
+    }
+}

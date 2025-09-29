@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Event Manager Dashboard{% endblock %}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logo.png' %}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="{% static 'images/logo.png' %}" alt="Logo">
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'event_list' %}" class="nav-link"><i class="fas fa-calendar"></i> Events</a></li>
+                        <li><a href="{% url 'attendees-list' %}" class="nav-link"><i class="fas fa-users"></i> Attendees</a></li>
+                        <li><a href="{% url 'event-signup' %}" class="nav-link"><i class="fas fa-sign-out-alt"></i> View Event Sign Up Page</a></li>
+                        <li class="nav-divider"></li>
+                        <li><a href="{% url 'logout' %}" class="nav-link logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        
+                    {% else %}
+                        <li><a href="{% url 'login' %}" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                        <li><a href="{% url 'signup' %}" class="nav-link"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+                        <li><a href="{% url 'event-signup' %}" class="nav-link"><i class="fas fa-sign-out-alt"></i> View Event Sign Up Page</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">{% block page_title %}Dashboard{% endblock %}</h1>
+                </div>
+                <div class="topbar-right">
+                    {% if user.is_authenticated %}
+                        <div class="user-info">
+                            <i class="fas fa-user-circle"></i>
+                            <span>Welcome, {{ user.username }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+        <p>&copy; {{ year|default:2025 }} InstinctWave Event Manager</p>
+    </footer>
+
+    <script>
+        // Sidebar toggle functionality
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.querySelector('.dashboard-container').classList.toggle('sidebar-collapsed');
+        });
+    </script>
+</body>
+</html>

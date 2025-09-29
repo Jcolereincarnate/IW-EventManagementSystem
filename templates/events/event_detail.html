@@ -1,0 +1,299 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+{% block title %}{{ event.title }} - Event Manager{% endblock %}
+{% block page_title %}Event Details{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="{% static "css/event_detail.css" %}">
+
+<div class="event-detail-container">
+    <div class="event-detail-header">
+        <div class="event-info">
+            <div class="event-title-section">
+                <h1>{{ event.title }}</h1>
+                <div class="event-badges">
+                    {% if event.status == "Upcoming" %}
+         <div class="event-status upcoming">Upcoming</div>
+         <span class="badge">{{ event.attendees.count }} Expected Attendees</span>
+{% elif event.status == "Active" %}
+    <div class="event-status active">Active</div>
+    <span class="badge">{{ event.attendees.count }} Attendees</span>
+{% elif event.status == "Past" %}
+    <div class="event-status past">Past</div>
+    <span class="badge">{{ event.attendees.count }} Attended</span>
+{% endif %}
+                    
+                </div>
+            </div>
+            
+            <div class="event-actions">
+                <button class="btn btn-outline">
+                    <i class="fas fa-edit"></i>
+                    Edit Event
+                </button>
+                <a href="{% url 'add_attendee' event.id %}" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i>
+                    Add Attendee
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="event-detail-content">
+        <div class="event-main-info">
+            <div class="info-card">
+                <h3>
+                    <i class="fas fa-info-circle"></i>
+                    Event Information
+                </h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Description:</label>
+                        <p>{{ event.description }}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Date & Time:</label>
+                        <p>
+                            <i class="fas fa-calendar"></i>
+                            {{ event.date|date:"F d, Y" }} 
+                            <i class= "fas fa-clock"></i>
+                            {{ event.time }}
+                        </p>
+                    </div>
+                    <div class="info-item">
+                        <label>Location:</label>
+                        <p>
+                            <i class="fas fa-map-marker-alt"></i>
+                            {{ event.location }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="attendees-card">
+                <div class="card-header">
+                    <h3>
+                        <i class="fas fa-users"></i>
+                        Attendees ({{ event.attendees.count }})
+                    </h3>
+                    <div class="card-actions">
+                        <a href = "{% url 'export_event_csv' event.id %}" class="btn btn-outline btn-sm">
+                            <i class="fas fa-download"></i>
+                            Export List
+                        </a>
+                        <a href="{% url 'add_attendee' event.id %}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-plus"></i>
+                            Add New
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="attendees-list">
+                    {% for attendee in event.attendees.all %}
+                    <div class="attendee-item">
+                        <div class="attendee-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="attendee-info">
+                            <h4>{{ attendee.name }}</h4>
+                            <div class="attendee-details">
+                                <span class="detail">
+                                    <i class="fas fa-envelope"></i>
+                                    {{ attendee.email }}
+                                </span>
+                                {% if attendee.phone %}
+                                <span class="detail">
+                                    <i class="fas fa-phone"></i>
+                                    {{ attendee.phone }}
+                                </span>
+                                {% endif %}
+                                {% if attendee.organization %}
+                                <span class="detail">
+                                    <i class="fas fa-building"></i>
+                                    {{ attendee.organization }}
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="attendee-actions">
+                            <button class="btn btn-icon" title="Edit Attendee" data-toggle="modal" data-target="#editModal-{{ attendee.id }}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <a href="{% url 'remove_attendee' attendee.id %}" class="btn-icon" title="Remove">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                            <button class="btn-icon" title="Send Email" data-toggle= "modal" data-target="#Emailmodal-{{ attendee.id }}">
+                                <i class="fas fa-envelope"></i>
+                            </button>
+                        </div>
+                        <!-- ================== Edit Attendee Modal ================== -->
+            <div class="modal fade" id="editModal-{{ attendee.id }}" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    
+                    <div class="modal-header">
+                      <h5 class="modal-title">Edit Attendee: {{ attendee.name }}</h5>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+      
+                    <form method="post" action="{% url 'edit_attendee' attendee.id %}">
+                      {% csrf_token %}
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label for="name-{{ attendee.id }}">Name</label>
+                          <input type="text" name="name" id="name-{{ attendee.id }}" class="form-control" value="{{ attendee.name }}">
+                        </div>
+      
+                        <div class="form-group">
+                          <label for="email-{{ attendee.id }}">Email</label>
+                          <input type="email" name="email" id="email-{{ attendee.id }}" class="form-control" value="{{ attendee.email }}">
+                        </div>
+      
+                        <div class="form-group">
+                          <label for="organization-{{ attendee.id }}">Organization</label>
+                          <input type="text" name="organization" id="organization-{{ attendee.id }}" class="form-control" value="{{ attendee.organization }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="organization-{{ attendee.id }}">Title</label>
+                            <input type="text" name="title" id="title-{{ attendee.id }}" class="form-control" value="{{ attendee.title }}">
+                          </div>
+                          <div class="form-group">
+                            <label for="organization-{{ attendee.id }}">Verified Status</label>
+                            <select name="attended" id="attended-{{ attendee.id }}" class="form-control">
+                                <option value="True" {% if attendee.attended %}selected{% endif %}>True</option>
+                                <option value="False" {% if not attendee.attended %}selected{% endif %}>False</option>
+                              </select>
+                          </div>
+                      </div>
+      
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                      </div>
+                    </form>
+      
+                  </div>
+                </div>
+              </div>
+      
+              <!-- ================== Remove Confirmation Modal ================== -->
+              <div class="modal fade" id="removeModal-{{ attendee.id }}" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-sm" role="document">
+                  <div class="modal-content">
+                    
+                    <div class="modal-header">
+                      <h5 class="modal-title">Confirm Removal</h5>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+      
+                    <div class="modal-body">
+                      Are you sure you want to remove <strong>{{ attendee.name }}</strong>?
+                    </div>
+      
+                    <div class="modal-footer">
+                      <form method="post" action="{% url 'remove_attendee' attendee.id %}">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-danger">Yes, Remove</button>
+                      </form>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+      
+                  </div>
+                </div>
+              </div>
+               <!-- ================== Email Modal ================== -->
+              <div class="modal fade" id="Emailmodal-{{ attendee.id }}" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-sm" role="document">
+                  <div class="modal-content">
+                    <div class="modal-footer">
+                      <form method="post" action="{% url 'send_email_attendee' attendee.id %}">
+                          {% csrf_token %}
+                          <div class="form-group">
+                            <label for="title" class="form-label">Email Title</label>
+                            <input class="" id="title" name="title" placeholder="Enter the email title">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message" class="form-label">Email Message</label>
+                            <textarea class="message-box" id="message" name="message" placeholder="Enter Email Message" rows="5" cols="40"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="link" class="form-label">External Link (Optional)</label>
+                            <input class="" name="link" id="link" placeholder="Enter Link if applicable">
+                        </div>
+                          <button type="submit" class="btn btn-primary">Send Email</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                      </form>
+                     
+
+                    </div>
+      
+                  </div>
+                </div>
+              </div>
+      
+                    </div>
+                    {% empty %}
+                    <div class="empty-attendees">
+                        <i class="fas fa-user-times"></i>
+                        <h4>No attendees yet</h4>
+                        <p>Start building your attendee list by adding the first participant.</p>
+                        <a href="{% url 'add_attendee' event.id %}" class="btn btn-primary">
+                            <i class="fas fa-user-plus"></i>
+                            Add First Attendee
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="event-sidebar">
+            <div class="stats-card">
+                <h3>Event Statistics</h3>
+                <div class="stat-items">
+                    <div class="stat-item">
+                        <div class="stat-value">{{ event.attendees.count }}</div>
+                        <div class="stat-label">Total Signed Up Attendees</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">Registration Rate</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{{ verified_attendee|default:"0" }}</div>
+                            <div class "stat-label">Verified Attendees</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quick-actions-card">
+                <h3>Quick Actions</h3>
+                <div class="action-buttons">
+                    <button class="action-btn">
+                        <i class="fas fa-envelope"></i>
+                        Send Invites
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-qrcode"></i>
+                        Generate QR Code
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-share"></i>
+                        Share Event
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-calendar-plus"></i>
+                        Duplicate Event
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

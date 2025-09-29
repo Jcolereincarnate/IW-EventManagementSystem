@@ -1,0 +1,131 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+{% block title %}Add Attendee - {{ event.title }} - Event Manager{% endblock %}
+{% block page_title %}Add Attendee{% endblock %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static "css/add_attendee.css" %}">
+</head>
+<div class="form-container">
+    <div class="form-header">
+        <div class="breadcrumb">
+            <a href="{% url 'event_list' %}">Events</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="{% url 'event_detail' event.id %}">{{ event.title }}</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Add Attendee</span>
+        </div>
+        
+        <h1>Add Attendee to {{ event.title }}</h1>
+        <p class="form-description">Fill in the attendee information below to add them to the event.</p>
+    </div>
+    
+    <div class="form-card">
+        <form method="post" class="attendee-form">
+            {% csrf_token %}
+            
+            <div class="form-section">
+                <h3>
+                    <i class="fas fa-user"></i>
+                    Personal Information
+                </h3>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">
+                            <i class="fas fa-user"></i>
+                            Full Name *
+                        </label>
+                        <input type="text" id="name" name="name" placeholder="Enter full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">
+                            <i class="fas fa-envelope"></i>
+                            Email Address *
+                        </label>
+                        <input type="email" id="email" name="email" placeholder="Enter email address" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>
+                    <i class="fas fa-address-card"></i>
+                    Contact Information
+                </h3>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">
+                            <i class="fas fa-phone"></i>
+                            Phone Number
+                        </label>
+                        <input type="text" id="phone" name="phone" placeholder="Enter phone number">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="organization">
+                            <i class="fas fa-building"></i>
+                            Organization
+                        </label>
+                        <input type="text" id="organization" name="organization" placeholder="Enter organization name">
+                    </div>
+                    <div class="form-group">
+                        <label for="organization">
+                            <i class="fas fa-user"></i>
+                            Title
+                        </label>
+                        <input type="text" id="title" name="title" placeholder="Enter your Title">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <a href="{% url 'event_detail' event.id %}" class="btn btn-outline">
+                    <i class="fas fa-arrow-left"></i>
+                    Cancel
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i>
+                    Add Attendee
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    <div class="form-sidebar">
+        <div class="event-summary-card">
+            <h3>Event Summary</h3>
+            <div class="event-info">
+                <h4>{{ event.title }}</h4>
+                <div class="event-details">
+                    <div class="detail">
+                        <i class="fas fa-calendar"></i>
+                        <span>{{ event.date|date:"F d, Y" }}</span>
+                    </div>
+                    <div class="detail">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>{{ event.location }}</span>
+                    </div>
+                    <div class="detail">
+                        <i class="fas fa-users"></i>
+                        <span>{{ event.attendees.count }} current attendees</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tips-card">
+            <h3>Tips</h3>
+            <ul>
+                <li>Make sure to double-check email addresses for accuracy</li>
+                <li>Phone numbers help with event reminders</li>
+                <li>Organization info can be useful for networking</li>
+                <li>Required fields are marked with an asterisk (*)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

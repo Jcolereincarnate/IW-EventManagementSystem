@@ -1,0 +1,349 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+{% block title %}Attendees Management - Event Manager{% endblock %}
+{% block page_title %}Attendees Management{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="{% static "css/attendees.css" %}">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="{% static "css/event_detail.css" %}">
+<div class="attendees-container">
+    <div class="attendees-header">
+        <div class="attendees-stats">
+            <div class="stat-card">
+                <div class="stat-icon primary">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>{{ total_attendees|default:"0" }}</h3>
+                    <p>Total Attendees</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon success">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>{{ active_events|default:"0" }}</h3>
+                    <p>Active Events</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon info">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>{{ organizations_count|default:"0" }}</h3>
+                    <p>Organizations</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls Section -->
+    <div class="attendees-controls">
+        <div class="controls-left">
+            <h2>
+                <i class="fas fa-users"></i>
+                All Attendees
+            </h2>
+        </div>
+        
+        <form method="get" action="" class="controls-right">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" name="q" placeholder="Search attendees by name or email..."
+                       value="{{ request.GET.q }}">
+            </div>
+            
+            <div class="filter-group">
+                <select class="filter-select" name="event">
+                    <option value="">All Events</option>
+                    {% for event in events %}
+                        <option value="{{ event.id }}" {% if request.GET.event == event.id|stringformat:"s" %}selected{% endif %}>
+                            {{ event.title }}
+                        </option>
+                    {% endfor %}
+                </select>
+                
+                <select class="filter-select" name="organization">
+                    <option value="">All Organizations</option>
+                    {% for org in organizations %}
+                        <option value="{{ org }}" {% if request.GET.organization == org %}selected{% endif %}>
+                            {{ org }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        
+            <button type="submit">Filter</button>
+        </form>
+            
+        <a href="{% url 'export_csv' %}" class="btn btn-outline">
+            <i class="fas fa-download"></i>
+            Export CSV
+        </a>
+    </div>
+
+    <div class="attendees-content">
+        {% if attendees %}
+        <div class="attendees-list">
+            {% for attendee in attendees %}
+            <div class="attendee-item">
+                <div class="attendee-info-section">
+                    <div class="attendee-profile-badge">
+                        <div class="attendee-avatar">
+                            <span>{{ attendee.name|first|upper }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="attendee-details">
+                        <div class="attendee-title-row">
+                            <h3 class="attendee-name">{{ attendee.name }}</h3>
+                        </div>
+                        
+                        <div class="attendee-meta-row">
+                            <div class="meta-item">
+                                <i class="fas fa-envelope"></i>
+                                <a href="mailto:{{ attendee.email }}" class="meta-link">{{ attendee.email }}</a>
+                            </div>
+                            
+                            <div class="meta-item">
+                                <i class="fas fa-phone"></i>
+                                {% if attendee.phone %}
+                                <a href="tel:{{ attendee.phone }}" class="meta-link">{{ attendee.phone }}</a>
+                                {% else %}
+                                <span class="meta-text no-data">Not provided</span>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="meta-item">
+                                <i class="fas fa-building"></i>
+                                {% if attendee.organization %}
+                                <span class="meta-text">{{ attendee.organization }}</span>
+                                {% else %}
+                                <span class="meta-text no-data">Not specified</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="attendee-events-row">
+                            <div class="events-label">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Event:</span>
+                            </div>
+                            <div class="events-badges">
+                                {% for event in attendee.events.all %}
+                                <div class="event-badge-item">
+                                    <a href="{% url 'event_detail' event.id %}" class="event-badge-link">{{ event.title }}</a>
+                                    <span class="event-date">{{ event.date|date:"M d, Y" }}</span>
+                                </div>
+                                {% empty %}
+                                <div class="no-events-badge">
+                                    <i class="fas fa-calendar-times"></i>
+                                    <span>No events assigned</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <div class="attendee-attendance-info">
+                                <div class="attendance-item">
+                                    <i class="fas fa-calendar-check"></i>
+                                    <span>Attended:</span>
+                                    <span class="meta-text">{{ attendee.attended }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="events-actions-section">
+                    <button class="btn btn-icon" title="Edit Attendee" data-toggle="modal" data-target="#editModal-{{ attendee.id }}">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn-icon" title="Send Email" data-toggle= "modal" data-target="#Emailmodal-{{ attendee.id }}">
+                        <i class="fas fa-envelope"></i>
+                    </button>
+    
+                    <button class="btn-icon" title="Remove Attendee" data-toggle="modal" data-target="#removeModal-{{ attendee.id }}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Edit Attendee Modal -->
+            <div class="modal fade" id="editModal-{{ attendee.id }}" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Attendee: {{ attendee.name }}</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <form method="post" action="{% url 'edit_attendee' attendee.id %}">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="name-{{ attendee.id }}">Name</label>
+                                    <input type="text" name="name" id="name-{{ attendee.id }}" class="form-control" value="{{ attendee.name }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email-{{ attendee.id }}">Email</label>
+                                    <input type="email" name="email" id="email-{{ attendee.id }}" class="form-control" value="{{ attendee.email }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="organization-{{ attendee.id }}">Organization</label>
+                                    <input type="text" name="organization" id="organization-{{ attendee.id }}" class="form-control" value="{{ attendee.organization }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="title-{{ attendee.id }}">Title</label>
+                                    <input type="text" name="title" id="title-{{ attendee.id }}" class="form-control" value="{{ attendee.title }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="attended-{{ attendee.id }}">Verified Status</label>
+                                    <select name="attended" id="attended-{{ attendee.id }}" class="form-control">
+                                        <option value="True" {% if attendee.attended %}selected{% endif %}>True</option>
+                                        <option value="False" {% if not attendee.attended %}selected{% endif %}>False</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Remove Confirmation Modal -->
+            <div class="modal fade" id="removeModal-{{ attendee.id }}" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Confirm Removal</h5>
+                            
+                        </div>
+
+                        <div class="modal-body">
+                            Are you sure you want to remove <strong>{{ attendee.name }}</strong>?
+                        </div>
+
+                        <div class="modal-footer">
+                            <form method="post" action="{% url 'remove_attendee' attendee.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Yes, Remove</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            </div>
+                            </form>
+                           
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Modal -->
+            <div class="modal fade" id="Emailmodal-{{ attendee.id }}" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Send Email to {{ attendee.name }}</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        
+                        <form method="post" action="{% url 'send_email_attendee' attendee.id %}">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="title-{{ attendee.id }}" class="form-label">Email Title</label>
+                                    <input class="form-control" id="title-{{ attendee.id }}" name="title" placeholder="Enter the email title">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="message-{{ attendee.id }}" class="form-label">Email Message</label>
+                                    <textarea class="form-control message-box" id="message-{{ attendee.id }}" name="message" placeholder="Enter Email Message" rows="4"></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="link-{{ attendee.id }}" class="form-label">External Link (Optional)</label>
+                                    <input class="form-control" name="link" id="link-{{ attendee.id }}" placeholder="Enter Link if applicable">
+                                </div>
+                            </div>
+                            
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Send Email</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-icon">
+                <i class="fas fa-users-slash"></i>
+            </div>
+            <h3>No Attendees Found</h3>
+            <p>No attendees have been registered for any events yet. Start by adding attendees to your events.</p>
+            <div class="empty-actions">
+                <a href="{% url 'event_list' %}" class="btn btn-primary">
+                    <i class="fas fa-calendar"></i>
+                    View Events
+                </a>
+                <a href="{% url 'add_attendees' %}" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i>
+                    Add Attendee
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Pagination -->
+    {% if attendees.has_other_pages %}
+    <div class="pagination-section">
+        <div class="pagination-info">
+            <span>Showing {{ attendees.start_index }} to {{ attendees.end_index }} of {{ attendees.paginator.count }} attendees</span>
+        </div>
+        
+        <div class="pagination">
+            {% if attendees.has_previous %}
+            <a href="?page=1" class="page-btn" title="First Page">
+                <i class="fas fa-angle-double-left"></i>
+            </a>
+            <a href="?page={{ attendees.previous_page_number }}" class="page-btn" title="Previous Page">
+                <i class="fas fa-angle-left"></i>
+            </a>
+            {% endif %}
+            
+            {% for num in attendees.paginator.page_range %}
+                {% if attendees.number == num %}
+                <span class="page-btn active">{{ num }}</span>
+                {% elif num > attendees.number|add:'-3' and num < attendees.number|add:'3' %}
+                <a href="?page={{ num }}" class="page-btn">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+            
+            {% if attendees.has_next %}
+            <a href="?page={{ attendees.next_page_number }}" class="page-btn" title="Next Page">
+                <i class="fas fa-angle-right"></i>
+            </a>
+            <a href="?page={{ attendees.paginator.num_pages }}" class="page-btn" title="Last Page">
+                <i class="fas fa-angle-double-right"></i>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
