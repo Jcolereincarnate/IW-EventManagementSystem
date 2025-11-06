@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instinct Wave Event Signup Portal</title>
     <link rel="stylesheet" href="{% static 'css/signup.css' %}">
     <link rel="stylesheet" href="{% static 'css/qrcode.css' %}">
@@ -13,16 +14,14 @@
     <link rel="icon" type="image/x-icon" href="{% static 'images/logo.png' %}">
 </head>
 <body>
-      <!--
+    <!--
     <nav class="main-navbar">
         <div class="navbar-container">
-            Logo Section 
             <div class="navbar-logo">
                     <img src="{% static 'images/logo.png' %}" alt="Company Logo" class="logo-img">
                 </a>
             </div>
-            
-         Navigation Links 
+
             <div class="navbar-nav">
                 <div class="nav-links">
                     <a href="{% url 'event-signup' %}" class="nav-link">
@@ -33,8 +32,7 @@
                     </a>
                 </div>
             </div>
-            
-           Mobile Menu Toggle 
+
             <button class="mobile-toggle" aria-label="Toggle navigation">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
@@ -206,36 +204,38 @@
 
     <footer class="site-footer">
         <div class="footer-container">
-          <div class="footer-about">
-            <img src="{% static 'images/logo.png' %}" alt="Company Logo" class="footer-logo">
+          <div class="footer-section footer-about">
+            <img src="{% static 'images/logo.png' %}" alt="Instinct Wave Logo" class="footer-logo">
             <p>
-              Instinct Wave is committed to delivering exceptional event experiences, connecting
-              professionals, and fostering impactful engagements across industries.
+              Instinct Wave is dedicated to creating exceptional event experiences, connecting
+              professionals, and fostering meaningful engagements across industries.
             </p>
           </div>
-    
-          <div class="footer-links">
+      
+          <div class="footer-section footer-links">
             <h4>Quick Links</h4>
             <ul>
-              <li><a href="#"><i class="fas fa-info-circle"></i> About Us</a></li>
+              <li><a href="https://instinctwave.net"><i class="fas fa-globe"></i> Visit Our Website</a></li>
               <li><a href="mailto:info@instinctwave.net"><i class="fas fa-envelope"></i> Contact</a></li>
             </ul>
           </div>
-    
-          <div class="footer-contact">
+      
+          <div class="footer-section footer-contact">
             <h4>Contact Us</h4>
-            <p><i class="fas fa-map-marker-alt"></i> Lagos office: 6, Adeojo Street, via Wemabod Estate, Adeniyi Jones Avenue, Lagos State, Nigeria</p>
-            <p><i class="fas fa-phone"></i> +234 800 000 0000</p>
-            <p><i class="fas fa-envelope"></i> info@instinctwave.net</p>
+            <ul>
+              <li><i class="fas fa-map-marker-alt"></i> 6, Adeojo Street, Wemabod Estate, Adeniyi Jones Avenue, Lagos, Nigeria</li>
+              <li><i class="fas fa-phone"></i> +44 7775 109698</li>
+              <li><i class="fas fa-envelope"></i> info@instinctwave.net</li>
+            </ul>
+      
             <div class="footer-socials">
               <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              <a href="https://ng.linkedin.com/company/instinctwave-group"><i class="fab fa-linkedin-in"></i></a>
               <a href="#"><i class="fab fa-instagram"></i></a>
             </div>
           </div>
         </div>
-        
+      
         <div class="footer-bottom">
           <p>&copy; {{ now }} Instinct Wave. All Rights Reserved.</p>
         </div>
