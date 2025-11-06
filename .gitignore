@@ -7,3 +7,7 @@ venv/
 .env
 #db.sqlite3
 /staticfiles/
+
+# Ignore SSH keys
+github_actions
+github_actions.pub
