@@ -2,7 +2,7 @@ name: Deploy to VPS
 
 on:
   push:
-    branches: [ main ]  # Change to 'master' if that's your branch name
+    branches: [ main ]
 
 jobs:
   deploy:
@@ -26,3 +26,25 @@ jobs:
           python manage.py migrate
           python manage.py collectstatic --noinput
           sudo systemctl restart lsws
+
+    - name: Send success email
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: "✅ Deployment Successful - Instinct Events"
+        to: "topepaul38@gmail.com"
+        from: ${{ secrets.EMAIL_USERNAME }}
+        body: |
+          Hello,
+          
+          The deployment to your VPS completed successfully!
+
+          ✅ Server: ${{ secrets.VPS_HOST }}
+          ✅ Branch: main
+          ✅ Commit: ${{ github.sha }}
+          ✅ Time: ${{ github.event.head_commit.timestamp }}
+
+          - GitHub Actions CI/CD
