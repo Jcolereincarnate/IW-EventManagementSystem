@@ -870,6 +870,9 @@ body {
     .footer-about {
         grid-column: 1 / -1 !important;
     }
+    .footer-sections .footer-contact {
+        text-decoration: none;
+    }
 }
 
 @media (max-width: 768px) {
@@ -882,6 +885,9 @@ body {
     .footer-links,
     .footer-contact {
         grid-column: 1 !important;
+    }
+    .footer-sections .footer-contact {
+        text-decoration: none;
     }
 }
 
@@ -926,6 +932,9 @@ body {
     .footer-bottom p {
         font-size: 0.85rem !important;
     }
+    .footer-sections .footer-contact {
+        text-decoration: none;
+    }
 }
 
 @media (max-width: 380px) {
@@ -944,5 +953,8 @@ body {
     .footer-socials a {
         width: 40px !important;
         height: 40px !important;
+    }
+    .footer-sections .footer-contact {
+        text-decoration: none;
     }
 }
